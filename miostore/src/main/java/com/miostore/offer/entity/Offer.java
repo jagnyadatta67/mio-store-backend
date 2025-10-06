@@ -1,17 +1,29 @@
 package com.miostore.offer.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.miostore.product.entity.Category;
 import com.miostore.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "offers")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
+@ToString(exclude = {"categories", "variants", "offers"})
+@EqualsAndHashCode(exclude = {"categories", "variants", "offers"})
+
 @Builder
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
 public class Offer {
 
     @Id
@@ -34,10 +46,12 @@ public class Offer {
     // Relationships
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
+    @JsonIgnore
     private Category category; // for CATEGORY offers
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
+    @JsonIgnore
     private Product product; // for PRODUCT offers
 
     // Optional: cart-level min spend condition

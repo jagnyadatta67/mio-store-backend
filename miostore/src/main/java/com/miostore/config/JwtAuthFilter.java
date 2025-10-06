@@ -1,6 +1,7 @@
 package com.miostore.config;
 
 import com.miostore.auth.JwtService;
+import com.miostore.auth.SessionService;
 import com.miostore.user.entity.User;
 import com.miostore.user.repository.UserRepository;
 import jakarta.servlet.FilterChain;
@@ -22,6 +23,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserRepository userRepository;
+    private final SessionService sessionService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -51,12 +53,17 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                         new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+                // ✅ Store in SessionService
+                sessionService.setCurrentUser(user);
             } else {
                 throw new ServletException("Invalid or expired JWT");
             }
         }
-
-        filterChain.doFilter(request, response);
+        try {
+            filterChain.doFilter(request, response);
+        } finally {
+            sessionService.clear(); // ✅ important for safety
+        }
     }
 }
 

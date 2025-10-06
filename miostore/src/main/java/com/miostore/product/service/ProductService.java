@@ -4,6 +4,7 @@ package com.miostore.product.service;
 import com.miostore.product.entity.Product;
 import com.miostore.product.repository.ProductRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,8 +17,9 @@ public class ProductService {
         this.productRepo = productRepo;
     }
 
+    @Transactional(readOnly = true)
     public List<Product> getAllProducts() {
-        return productRepo.findAll();
+        return productRepo.findAllWithGraph();
     }
 
     public Product getProduct(Long id) {
@@ -39,9 +41,7 @@ public class ProductService {
         productRepo.deleteById(id);
     }
 
-    public List<Product> searchByName(String name) {
-        return productRepo.findByNameContainingIgnoreCase(name);
-    }
+
 
     public List<Product> getByCategory(Long categoryId) {
         return productRepo.findByCategoriesId(categoryId);

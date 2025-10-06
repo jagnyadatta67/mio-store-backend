@@ -3,7 +3,9 @@ package com.miostore.product.controller;
 
 
 
+import com.miostore.product.dto.ProductDTO;
 import com.miostore.product.entity.Product;
+import com.miostore.product.mapper.ProductMapper;
 import com.miostore.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,8 +28,10 @@ public class ProductController {
 
     @GetMapping
     @Operation(summary = "List all products")
-    public List<Product> getAll() {
-        return productService.getAllProducts();
+    public List<ProductDTO> getAll() {
+        return ProductMapper.toDTOList(productService.getAllProducts());
+
+
     }
 
     @GetMapping("/{id}")
@@ -54,11 +58,6 @@ public class ProductController {
         productService.deleteProduct(id);
     }
 
-    @GetMapping("/search")
-    @Operation(summary = "Search products by name")
-    public List<Product> search(@RequestParam String q) {
-        return productService.searchByName(q);
-    }
 
     @GetMapping("/category/{categoryId}")
     @Operation(summary = "Get products by category")

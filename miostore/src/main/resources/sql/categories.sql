@@ -1,10 +1,10 @@
 -- Super category
 INSERT INTO categories (id, name, slug, description, parent_id, created_at, updated_at)
-VALUES (1, 'Food', 'food', 'All food items', NULL, NOW(), NOW());
+VALUES (2, 'Food', 'food', 'All food items', NULL, NOW(), NOW());
 
 -- Sub-category under Food
 INSERT INTO categories (id, name, slug, description, parent_id, created_at, updated_at)
-VALUES (2, 'Millets', 'millets', 'Millet-based products', 1, NOW(), NOW());
+VALUES (1, 'Millets', 'millets', 'Millet-based products', 1, NOW(), NOW());
 
 -- Sub-subcategory under Millets
 INSERT INTO categories (id, name, slug, description, parent_id, created_at, updated_at)

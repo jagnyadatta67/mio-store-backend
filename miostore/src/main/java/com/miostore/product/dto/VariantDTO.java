@@ -17,6 +17,6 @@ public class VariantDTO {
     private String color;
     private String colorHex;
     private List<String> variantImageUrl;
-    private List<String> variantThumbImageUrl;
+    private String variantThumbImageUrl;
 
 }

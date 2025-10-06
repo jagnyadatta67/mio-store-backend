@@ -1,24 +1,31 @@
 package com.miostore.product.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.miostore.common.entity.BaseEntity;
 import com.miostore.offer.entity.Offer;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "categories")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
+@ToString(exclude = {"products", "subcategories", "offers"})
+@EqualsAndHashCode(exclude = {"products", "subcategories", "offers"})
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
 public class Category  extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +47,9 @@ public class Category  extends BaseEntity {
 
     // Many-to-many with products
     @ManyToMany(mappedBy = "categories")
-    private List<Product> products = new ArrayList<>();
+    @JsonIgnore
+
+    private Set<Product> products = new HashSet<>();
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Offer> offers = new ArrayList<>();
