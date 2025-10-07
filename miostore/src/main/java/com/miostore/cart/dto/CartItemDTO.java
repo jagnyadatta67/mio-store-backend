@@ -14,6 +14,9 @@ public class CartItemDTO {
     @Schema(description = "Product ID", example = "101")
     private Long productId;
 
+    @Schema(description = "Product sku", example = "101")
+    private String sku;
+
     @Schema(description = "Product name", example = "Organic Foxtail Millet")
     private String productName;
 
@@ -28,4 +31,5 @@ public class CartItemDTO {
 
     @Schema(description = "Variant name (e.g., 1kg, 500g, etc.)", example = "1kg")
     private String variant;
+    private  String unitLabel;
 }

@@ -66,6 +66,32 @@ public class CartService {
     }
 
     @Transactional
+    public Cart updateQuantity( String variantId, int quantity) {
+        Cart cart = getCart();
+        ProductVariant variant = productVariantRepository.findBySku(variantId)
+                .orElseThrow(() -> new RuntimeException("Variant not found"));
+
+        CartItem item = cartItemRepository.findByProductAndCartId(variant, cart.getId())
+                .orElseThrow(() -> new RuntimeException("Item not found in cart"));
+
+        item.setQuantity(quantity);
+        cartItemRepository.save(item);
+        return cartRepository.findById(cart.getId()).get();
+    }
+
+    @Transactional
+    public void removeFromCart( String variantId) {
+        Cart cart = getCart();
+        ProductVariant variant = productVariantRepository.findBySku(variantId)
+                .orElseThrow(() -> new RuntimeException("Variant not found"));
+
+        CartItem item = cartItemRepository.findByProductAndCartId(variant, cart.getId())
+                .orElseThrow(() -> new RuntimeException("Item not found"));
+
+        cartItemRepository.delete(item);
+    }
+
+    @Transactional
     public Cart getCart() {
         User user =  sessionService.getCurrentUser();
         return cartRepository.findByUser(user)

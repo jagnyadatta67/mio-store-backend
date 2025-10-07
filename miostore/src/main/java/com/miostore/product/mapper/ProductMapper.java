@@ -71,14 +71,14 @@ public class ProductMapper {
                 .collect(Collectors.toCollection(HashSet::new));
 
         return ProductDTO.builder()
-                .id(String.valueOf(product.getId()))
+                .id(String.valueOf(product.getId())).name(product.getName())
                 .description(product.getDescription())
                 .currency(product.getCurrency())
                 .sku(product.getSku())
                 .brand(product.getBrand())
                 .category(categoryNames)
                 .rating(product.getRating())
-                .variants(variantDTOs)
+                .variants(variantDTOs).imageUrl(product.getThumbnailImage())
                 .offers(offerDTOs)
                 .build();
     }

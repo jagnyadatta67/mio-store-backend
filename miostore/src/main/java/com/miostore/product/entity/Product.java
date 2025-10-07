@@ -38,6 +38,8 @@ public class Product extends BaseEntity {
     private String currency;
     private String sku;
     private String ean;
+    private String name;
+    private String thumbnailImage;
     @Builder.Default
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProductVariant> variants = new HashSet<>();

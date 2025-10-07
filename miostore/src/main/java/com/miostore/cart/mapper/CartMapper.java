@@ -44,12 +44,12 @@ public class CartMapper {
      */
     private static CartItemDTO mapItem(CartItem item) {
         return CartItemDTO.builder()
-                .productId(item.getProduct().getId())
+                .productId(item.getProduct().getId()).sku(item.getProduct().getSku())
                 .productName(item.getProduct().getName())
-                .imageUrl(item.getProduct().getThumbImageUrl())
+                .imageUrl(item.getProduct().getProduct().getThumbnailImage())
                 .price(item.getPrice())
                 .quantity(item.getQuantity())
-                .variant(item.getProduct().getColor())
+                .variant(item.getProduct().getColor()).unitLabel(item.getProduct().getUnitLabel())
                 .build();
     }
 }

@@ -1,15 +1,25 @@
--- Super category
-INSERT INTO categories (id, name, slug, description, parent_id, created_at, updated_at)
-VALUES (2, 'Food', 'food', 'All food items', NULL, NOW(), NOW());
+USE `miostore-dev`;
 
--- Sub-category under Food
-INSERT INTO categories (id, name, slug, description, parent_id, created_at, updated_at)
-VALUES (1, 'Millets', 'millets', 'Millet-based products', 1, NOW(), NOW());
+-- ===============================
+-- OFFERS TABLE
+-- ===============================
+INSERT INTO offers
+(id, title, description, offer_type, discount_percent, discount_amount, valid_from, valid_till, active, category_id, product_id, min_cart_value)
+VALUES
+-- 🎉 Product-specific Offers
+(1, 'Foxtail Festive Offer', 'Get 10% off on Foxtail Millet variants', 'PRODUCT', 10.0, NULL,
+ CURDATE(), DATE_ADD(CURDATE(), INTERVAL 30 DAY), TRUE, NULL, 1, NULL),
 
--- Sub-subcategory under Millets
-INSERT INTO categories (id, name, slug, description, parent_id, created_at, updated_at)
-VALUES (3, 'Snacks', 'snacks', 'Millet snack items', 2, NOW(), NOW());
+(2, 'Little Millet Family Pack Offer', 'Buy 1kg or more and save 12%', 'PRODUCT', 12.0, NULL,
+ CURDATE(), DATE_ADD(CURDATE(), INTERVAL 30 DAY), TRUE, NULL, 2, NULL),
 
--- Another category
-INSERT INTO categories (id, name, slug, description, parent_id, created_at, updated_at)
-VALUES (4, 'Healthy Drinks', 'healthy-drinks', 'Natural millet-based drinks', 1, NOW(), NOW());
+(3, 'Finger Millet Discount', 'Enjoy 15% off on all Finger Millet variants', 'PRODUCT', 15.0, NULL,
+ CURDATE(), DATE_ADD(CURDATE(), INTERVAL 30 DAY), TRUE, NULL, 3, NULL),
+
+-- 🛒 Category-level Offers
+(4, 'Millets Bonanza', 'Flat 10% off on all Millet products', 'CATEGORY', 10.0, NULL,
+ CURDATE(), DATE_ADD(CURDATE(), INTERVAL 20 DAY), TRUE, 2, NULL, NULL),
+
+-- 💰 Cart-level Offer
+(5, 'Cart Saver Offer', 'Get ₹100 off on cart value above ₹999', 'CART', NULL, 100.0,
+ CURDATE(), DATE_ADD(CURDATE(), INTERVAL 15 DAY), TRUE, NULL, NULL, 999.00);

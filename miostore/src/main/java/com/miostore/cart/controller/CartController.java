@@ -6,11 +6,15 @@ import com.miostore.cart.dto.CartRequest;
 import com.miostore.cart.mapper.CartMapper;
 import com.miostore.cart.service.CartService;
 import com.miostore.order.entity.Cart;
+import com.miostore.product.entity.ProductVariant;
+import com.miostore.suggestion.CartSuggestionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/cart")
@@ -20,6 +24,7 @@ public class CartController {
 
     private final CartService cartService;
     private final JwtService jwtService;
+    private final CartSuggestionService cartSuggestionService;
 
     @PostMapping("/add")
     @Operation(summary = "Add product to cart")
@@ -36,4 +41,24 @@ public class CartController {
     public ResponseEntity<CartDTO> getCart() {
         return ResponseEntity.ok(CartMapper.toDTO(cartService.getCart()));
     }
+
+    @PutMapping("/update")
+    public Cart updateQuantity(@RequestHeader("Authorization") String token,
+                               @RequestBody CartRequest request) {
+        return cartService.updateQuantity( request.getVariant(), request.getQuantity());
+    }
+
+    @DeleteMapping("/remove/{variantId}")
+    public void removeItem(@RequestHeader("Authorization") String token,
+                           @PathVariable String variantId) {
+
+        cartService.removeFromCart( variantId);
+    }
+
+    @GetMapping("/suggestions")
+    public List<ProductVariant> getSuggestions() {
+
+        return cartSuggestionService.getSuggestions();
+    }
+
 }
