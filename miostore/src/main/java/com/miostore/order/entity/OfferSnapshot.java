@@ -1,24 +1,36 @@
 package com.miostore.order.entity;
 
 import com.miostore.common.entity.BaseEntity;
-import jakarta.persistence.Embeddable;
+import com.miostore.offer.entity.DiscountType;
+import com.miostore.offer.entity.OfferType;
+import jakarta.persistence.*;
+
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
-
-@Embeddable
+@Entity
+@Table(name = "offer_snapshots")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
-public class OfferSnapshot  {
+@Builder
+public class OfferSnapshot extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String offerCode;
     private String description;
     private Double discountValue;
-    private String discountType; // e.g., PERCENTAGE or FLAT
+
+    @Enumerated(EnumType.STRING)
+    private OfferType offerType; // ✅ Enum below (PERCENTAGE/FLAT)
+    @Enumerated(EnumType.STRING)
+    private DiscountType discountType;
+
     private boolean active;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private boolean coupon;
+    private boolean couponCode;
+
 }

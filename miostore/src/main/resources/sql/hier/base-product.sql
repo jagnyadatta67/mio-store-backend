@@ -1,11 +1,11 @@
 USE `mio_local`;
 
 
-INSERT INTO products (id, description, brand, rating, currency, sku, ean, created_at, updated_at)
+INSERT INTO products (id, description, brand, rating, currency, sku, ean, created_at, updated_at,thumbnail_image)
 VALUES
-(1, 'Organic and fiber-rich Foxtail Millet, perfect for a healthy lifestyle.', 'MiO Organics', 4.7, 'INR', 'MIL-FT', 'EAN-FT-001', NOW(), NOW()),
-(2, 'High in iron and calcium, Little Millet is great for kids and adults alike.', 'MiO Organics', 4.6, 'INR', 'MIL-LT', 'EAN-LT-002', NOW(), NOW()),
-(3, 'Rich in calcium and minerals, Finger Millet (Ragi) supports strong bones.', 'MiO Organics', 4.8, 'INR', 'MIL-FN', 'EAN-FN-003', NOW(), NOW());
+(1, 'Organic and fiber-rich Foxtail Millet, perfect for a healthy lifestyle.', 'MiO Organics', 4.7, 'INR', 'MIL-FT', 'EAN-FT-001', NOW(), NOW(),'https://raw.githubusercontent.com/jagnyadatta67/mio/refs/heads/main/images/pack-foxtail.png'),
+(2, 'High in iron and calcium, Little Millet is great for kids and adults alike.', 'MiO Organics', 4.6, 'INR', 'MIL-LT', 'EAN-LT-002', NOW(), NOW(),'https://raw.githubusercontent.com/jagnyadatta67/mio/refs/heads/main/images/pack-little.png'),
+(3, 'Rich in calcium and minerals, Finger Millet (Ragi) supports strong bones.', 'MiO Organics', 4.8, 'INR', 'MIL-FN', 'EAN-FN-003', NOW(), NOW(),'https://raw.githubusercontent.com/jagnyadatta67/mio/refs/heads/main/images/pack-little.png');
 
 
 -- ===============================
@@ -16,34 +16,34 @@ INSERT INTO product_variants
 VALUES
 -- Foxtail Millet
 (1, 'Foxtail Millet 0.5kg', 'MIL-FT-001-0.5KG', 'EAN-FT-001A', '0.5kg', 'Natural', 200, 70.00, 65.00,
- 'https://www.themiostore.com/images/foxtail-0.5kg.png', 1),
+ 'https://raw.githubusercontent.com/jagnyadatta67/mio/refs/heads/main/images/pack-foxtail.png', 1),
 
 (2, 'Foxtail Millet 1kg', 'MIL-FT-001-1KG', 'EAN-FT-001B', '1kg', 'Natural', 150, 120.00, 99.00,
- 'https://www.themiostore.com/images/thumbs/foxtail-1kg-thumb.png', 1),
+ 'https://raw.githubusercontent.com/jagnyadatta67/mio/refs/heads/main/images/pack-foxtail.png', 1),
 
 (3, 'Foxtail Millet 1.5kg', 'MIL-FT-001-1.5KG', 'EAN-FT-001C', '1.5kg', 'Natural', 100, 150.00, 130.00,
- 'https://www.themiostore.com/images/thumbs/foxtail-1.5kg-thumb.png', 1),
+ 'https://raw.githubusercontent.com/jagnyadatta67/mio/refs/heads/main/images/pack-foxtail.png', 1),
 
 
 -- Little Millet
 (4, 'Little Millet 0.5kg', 'MIL-LT-002-0.5KG', 'EAN-LT-002A', '0.5kg', 'Natural', 180, 65.00, 60.00,
- 'https://www.themiostore.com/images/thumbs/little-0.5kg-thumb.png', 2),
+ 'https://raw.githubusercontent.com/jagnyadatta67/mio/refs/heads/main/images/pack-little.png', 2),
 
 (5, 'Little Millet 1kg', 'MIL-LT-002-1KG', 'EAN-LT-002B', '1kg', 'Natural', 160, 110.00, 95.00,
- 'https://www.themiostore.com/images/thumbs/little-1kg-thumb.png', 2),
+ 'https://raw.githubusercontent.com/jagnyadatta67/mio/refs/heads/main/images/pack-little.png', 2),
 
 (6, 'Little Millet 1.5kg', 'MIL-LT-002-1.5KG', 'EAN-LT-002C', '1.5kg', 'Natural', 100, 145.00, 125.00,
- 'https://www.themiostore.com/images/thumbs/little-1.5kg-thumb.png', 2),
+ 'https://raw.githubusercontent.com/jagnyadatta67/mio/refs/heads/main/images/pack-little.png', 2),
 
 -- Finger Millet
 (7, 'Finger Millet 0.5kg', 'MIL-FN-003-0.5KG', 'EAN-FN-003A', '0.5kg', 'Natural', 190, 55.00, 49.00,
- 'https://www.themiostore.com/images/thumbs/finger-0.5kg-thumb.png', 3),
+ 'https://raw.githubusercontent.com/jagnyadatta67/mio/refs/heads/main/images/pack-hero.png', 3),
 
 (8, 'Finger Millet 1kg', 'MIL-FN-003-1KG', 'EAN-FN-003B', '1kg', 'Natural', 150, 95.00, 85.00,
- 'https://www.themiostore.com/images/thumbs/finger-1kg-thumb.png', 3),
+ 'https://raw.githubusercontent.com/jagnyadatta67/mio/refs/heads/main/images/pack-hero.png', 3),
 
 (9, 'Finger Millet 1.5kg', 'MIL-FN-003-1.5KG', 'EAN-FN-003C', '1.5kg', 'Natural', 100, 130.00, 115.00,
- 'https://www.themiostore.com/images/thumbs/finger-1.5kg-thumb.png', 3);
+ 'https://raw.githubusercontent.com/jagnyadatta67/mio/refs/heads/main/images/pack-hero.png', 3);
 
 
 

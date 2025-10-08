@@ -11,7 +11,7 @@ public class OrderAddressMapper {
     /**
      * ✅ Converts embedded OrderAddress → AddressRequest (for DTO)
      */
-    public static AddressRequest toDTO(OrderAddress address) {
+    public static AddressRequest toDTO(Address address) {
         if (address == null) return null;
 
         return AddressRequest.builder()
@@ -47,10 +47,10 @@ public class OrderAddressMapper {
     /**
      * ✅ Converts AddressRequest → OrderAddress (for entity snapshot)
      */
-    public static OrderAddress fromCustomerAddress(Address dto) {
+    public static Address fromCustomerAddress(Address dto) {
         if (dto == null) return null;
 
-        return OrderAddress.builder()
+        return Address.builder()
                 .fullName(dto.getFullName())
                 .phoneNumber(dto.getPhoneNumber())
                 .addressLine1(dto.getAddressLine1())

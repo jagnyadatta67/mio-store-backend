@@ -3,6 +3,7 @@ package com.miostore.offer.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.miostore.common.entity.BaseEntity;
 import com.miostore.product.entity.Category;
 import com.miostore.product.entity.Product;
 import jakarta.persistence.*;
@@ -24,24 +25,27 @@ import java.time.LocalDate;
 @Builder
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 
-public class Offer {
+public class Offer extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private String code;
     private String title;          // e.g. "Festival Offer"
     private String description;    // e.g. "10% off on millets"
 
     @Enumerated(EnumType.STRING)
     private OfferType offerType;   // PRODUCT, CATEGORY, or CART
-
+    @Enumerated(EnumType.STRING)
+    private DiscountType discountType;
     private Double discountPercent; // e.g. 10
     private Double discountAmount;  // optional, e.g. ₹100 off
 
     private LocalDate validFrom;
     private LocalDate validTill;
     private Boolean active;
+    private Boolean coupon;
+    private Boolean couponCode;
 
     // Relationships
     @ManyToOne(fetch = FetchType.LAZY)

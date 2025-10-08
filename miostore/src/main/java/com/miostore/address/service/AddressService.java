@@ -10,6 +10,8 @@ import com.miostore.user.entity.User;
 import com.miostore.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,7 +32,7 @@ public class AddressService {
 
         // If address isDefault = true, unset others
         if (request.isDefault()) {
-            addressRepository.findByUser(user).forEach(addr -> {
+            addressRepository.findByOwner(user).forEach(addr -> {
                 addr.setDefault(false);
                 addressRepository.save(addr);
             });
@@ -46,7 +48,7 @@ public class AddressService {
                 .postalCode(request.getPostalCode())
                 .country(request.getCountry())
                 .isDefault(request.isDefault())
-                .user(user)
+                .owner(user)
                 .build();
 
         Address saved = addressRepository.save(address);
@@ -57,7 +59,7 @@ public class AddressService {
     public List<AddressResponse> getAllUserAddresses() {
           User user=sessionService.getCurrentUser();
 
-        return addressRepository.findByUser(user)
+        return addressRepository.findByOwner(user)
                 .stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
@@ -65,7 +67,7 @@ public class AddressService {
     public List<AddressResponse> getUserAddresses(Long userId) {
         User user=sessionService.getCurrentUser();
 
-        return addressRepository.findByUser(user)
+        return addressRepository.findByOwner(user)
                 .stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
@@ -75,10 +77,23 @@ public class AddressService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        Address address = addressRepository.findByUserAndIsDefaultTrue(user)
+        Address address = addressRepository.findByOwnerAndIsDefaultTrue(user)
                 .orElseThrow(() -> new RuntimeException("Default address not found"));
         return mapToResponse(address);
     }
+
+    @Transactional
+    public void deleteAddress(Long addressId, User currentUser) {
+        Address address = addressRepository.findById(addressId)
+                .orElseThrow(() -> new RuntimeException("Address not found"));
+
+        if (!address.getOwner().getId().equals(currentUser.getId())) {
+            throw new IllegalStateException("You cannot delete another user's address");
+        }
+
+        addressRepository.delete(address);
+    }
+
 
     private AddressResponse mapToResponse(Address address) {
         return AddressResponse.builder()

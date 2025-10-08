@@ -45,6 +45,6 @@ public class User extends BaseEntity {
     private Role role;
     private String profilePicture;
     private LocalDateTime lastLoginAt;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses;
 }
