@@ -1,5 +1,6 @@
 package com.miostore.cart.dto;
 
+import com.miostore.address.dto.AddressRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -23,4 +24,6 @@ public class CartDTO {
 
     @Schema(description = "Total amount of all cart items", example = "450.00")
     private Double totalAmount;
+    @Schema(description = "Cart Shipping Address", example = "KS-BLR")
+    private AddressRequest address;
 }

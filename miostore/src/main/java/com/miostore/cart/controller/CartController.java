@@ -1,5 +1,6 @@
 package com.miostore.cart.controller;
 
+import com.miostore.address.dto.AddressRequest;
 import com.miostore.auth.JwtService;
 import com.miostore.cart.dto.CartDTO;
 import com.miostore.cart.dto.CartRequest;
@@ -59,6 +60,14 @@ public class CartController {
     public List<ProductVariant> getSuggestions() {
 
         return cartSuggestionService.getSuggestions();
+    }
+
+    @PostMapping("/address")
+    public ResponseEntity<CartDTO> addAddressToCart(
+            @RequestBody AddressRequest request) {
+        Cart updatedCart = cartService.attachAddressToCart(request.getId());
+
+        return ResponseEntity.ok(CartMapper.toDTO(updatedCart));
     }
 
 }

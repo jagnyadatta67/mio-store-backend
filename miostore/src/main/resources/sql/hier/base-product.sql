@@ -1,4 +1,4 @@
-USE `miostore-dev`;
+USE `mio_local`;
 
 
 INSERT INTO products (id, description, brand, rating, currency, sku, ean, created_at, updated_at)

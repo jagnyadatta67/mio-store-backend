@@ -1,5 +1,6 @@
 package com.miostore.order.entity;
 
+import com.miostore.address.entity.Address;
 import com.miostore.common.entity.BaseEntity;
 import com.miostore.user.entity.User;
 import jakarta.persistence.*;
@@ -13,17 +14,15 @@ import java.util.List;
 @Table(name = "carts")
 @Getter
 @Setter @NoArgsConstructor @AllArgsConstructor @SuperBuilder
-public class Cart extends BaseEntity {
+public class Cart extends AbstractOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // One cart belongs to one user
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false, unique = true)
-    private User user;
-
     // A cart has many items
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> items = new ArrayList<>();
+
+
+
 }

@@ -1,5 +1,9 @@
 package com.miostore.cart.service;
 
+import com.miostore.address.OrderAddressMapper;
+import com.miostore.address.dto.AddressRequest;
+import com.miostore.address.entity.Address;
+import com.miostore.address.repository.AddressRepository;
 import com.miostore.auth.SessionService;
 import com.miostore.cart.repository.CartItemRepository;
 import com.miostore.cart.repository.CartRepository;
@@ -11,6 +15,7 @@ import com.miostore.user.entity.User;
 import com.miostore.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -23,6 +28,8 @@ public class CartService {
     private final CartItemRepository cartItemRepository;
     private final ProductVariantRepository productVariantRepository;
     private final UserRepository userRepository;
+
+    private final AddressRepository addressRepository;
     private final SessionService sessionService;
 
     /**
@@ -106,6 +113,14 @@ public class CartService {
         newCart.setUser(user);
         return cartRepository.save(newCart);
     }
+
+    public Cart attachAddressToCart( Long id) {
+        Cart cart = getCart();
+        Optional<Address> addressRequest=addressRepository.findById(id);
+        cart.setShippingAddress(OrderAddressMapper.fromCustomerAddress(addressRequest.get()));
+        return cartRepository.save(cart);
+    }
+
 
 
 

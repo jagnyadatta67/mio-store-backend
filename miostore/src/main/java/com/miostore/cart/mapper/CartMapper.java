@@ -1,6 +1,9 @@
 package com.miostore.cart.mapper;
 
 
+import com.miostore.address.OrderAddressMapper;
+import com.miostore.address.dto.AddressRequest;
+import com.miostore.address.entity.Address;
 import com.miostore.cart.dto.CartDTO;
 import com.miostore.cart.dto.CartItemDTO;
 import com.miostore.order.entity.Cart;
@@ -8,14 +11,11 @@ import com.miostore.order.entity.CartItem;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
-
 @UtilityClass
 public class CartMapper {
 
-    /**
-     * ✅ Converts a Cart entity into a CartDTO.
-     */
     public static CartDTO toDTO(Cart cart) {
         if (cart == null) return null;
 
@@ -24,7 +24,7 @@ public class CartMapper {
                 .collect(Collectors.toList());
 
         double total = itemDTOs.stream()
-                .mapToDouble(item -> item.getPrice() * item.getQuantity())
+                .mapToDouble(i -> i.getPrice() * i.getQuantity())
                 .sum();
 
         return CartDTO.builder()
@@ -36,21 +36,35 @@ public class CartMapper {
                         : null)
                 .items(itemDTOs)
                 .totalAmount(total)
+                .address(OrderAddressMapper.toDTO(cart.getShippingAddress()))
                 .build();
     }
 
-    /**
-     * ✅ Converts a CartItem entity into a CartItemDTO.
-     */
     private static CartItemDTO mapItem(CartItem item) {
         return CartItemDTO.builder()
-                .productId(item.getProduct().getId()).sku(item.getProduct().getSku())
+                .productId(item.getProduct().getId())
+                .sku(item.getProduct().getSku())
                 .productName(item.getProduct().getName())
                 .imageUrl(item.getProduct().getProduct().getThumbnailImage())
                 .price(item.getPrice())
                 .quantity(item.getQuantity())
-                .variant(item.getProduct().getColor()).unitLabel(item.getProduct().getUnitLabel())
+                .variant(item.getProduct().getColor())
+                .unitLabel(item.getProduct().getUnitLabel())
+                .build();
+    }
+
+    private static AddressRequest mapAddress(Address shipping) {
+        if (shipping == null) return null;
+        return AddressRequest.builder()
+                .fullName(shipping.getFullName())
+                .phoneNumber(shipping.getPhoneNumber())
+                .addressLine1(shipping.getAddressLine1())
+                .addressLine2(shipping.getAddressLine2())
+                .city(shipping.getCity())
+                .state(shipping.getState())
+                .postalCode(shipping.getPostalCode())
+                .country(shipping.getCountry())
+                .isDefault(shipping.isDefault())
                 .build();
     }
 }
-

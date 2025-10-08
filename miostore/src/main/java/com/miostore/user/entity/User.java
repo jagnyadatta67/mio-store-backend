@@ -1,5 +1,6 @@
 package com.miostore.user.entity;
 
+import com.miostore.address.entity.Address;
 import com.miostore.common.entity.BaseEntity;
 import com.miostore.order.entity.Cart;
 import com.miostore.order.entity.Order;
@@ -17,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@ToString(exclude = {"orders", "cart"})
+@ToString(exclude = {"orders", "cart","addresses"})
 public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,4 +45,6 @@ public class User extends BaseEntity {
     private Role role;
     private String profilePicture;
     private LocalDateTime lastLoginAt;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Address> addresses;
 }
