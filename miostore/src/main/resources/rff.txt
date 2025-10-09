@@ -1,6 +1,6 @@
 spring.datasource.url=jdbc:mysql://mysql-1cb96611-jai-82e4.l.aivencloud.com:28748/defaultdb?sslMode=REQUIRED&enabledTLSProtocols=TLSv1.2
-spring.datasource.username=avnadmin
-spring.datasource.password=AVNS_WzdLo34Cg42l3FW4PFa
+spring.datasource.username=avnadminAVNS
+spring.datasource.password=_WzdLo34Cg42l3FW4PFaWHaw
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 # ===============================
