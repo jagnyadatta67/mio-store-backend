@@ -1,24 +1,24 @@
-# ---- Build stage ----
+# ===============================
+# Stage 1: Build the application
+# ===============================
 FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
-
-# Copy pom.xml and download dependencies first (cache layer)
 COPY pom.xml .
-RUN mvn dependency:go-offline
-
-# Copy source code and build
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-# ---- Runtime stage ----
-FROM eclipse-temurin:21-jre
+# ===============================
+# Stage 2: Run the application
+# ===============================
+FROM eclipse-temurin:21-jdk
 WORKDIR /app
 
-# Copy jar from build stage
+# Copy only the jar from the build stage
 COPY --from=build /app/target/*.jar app.jar
 
-# Expose backend port
+# Use environment variable PORT provided by Render
+ENV PORT=8080
 EXPOSE 8080
 
-# Run the application
+# Start the app
 ENTRYPOINT ["java", "-jar", "app.jar"]
